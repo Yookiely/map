@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 
 @Mapper
 @Component(value = "WindRoseMapper")
-public interface WindRoseMapper {
+interface WindRoseMapper {
     @Select("select * from wind_head WHERE refTime = #{refTime}")
     fun getHeadByTime(refTime : String) : Head
 

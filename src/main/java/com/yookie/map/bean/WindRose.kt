@@ -2,6 +2,8 @@ package com.yookie.map.bean
 
 import com.yookie.map.NoArg
 
+
+@NoArg
 data class WindRose(
          val head : Head,
          val data : List<Float>

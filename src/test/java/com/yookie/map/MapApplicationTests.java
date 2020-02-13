@@ -1,7 +1,9 @@
 package com.yookie.map;
 
+import com.yookie.map.bean.Data;
 import com.yookie.map.bean.Head;
 import com.yookie.map.bean.WindRose;
+import com.yookie.map.mapper.HeatMapMapper;
 import com.yookie.map.mapper.WindRoseMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -21,11 +23,14 @@ class MapApplicationTests {
     @Autowired
     WindRoseMapper windRoseMapper;
 
+    @Autowired
+    HeatMapMapper heatMapMapper;
+
 
 
     @Test
     public void testMapper() {
-        Head employee = windRoseMapper.getHeadByTime("10");
-        System.out.println(employee.getParameterNumberName());
+        List<Data> employee = heatMapMapper.getHeadMapByDate("10");
+        System.out.println(employee.get(0).getCount());
     }
 }
