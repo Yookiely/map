@@ -1,8 +1,8 @@
-package com.yookie.map
+package com.yookie.map.bean
 
 data class HeatMap(
         val max : Int,
-        val data : Data
+        val data : List<Data>
 )
 
 data class Data(
