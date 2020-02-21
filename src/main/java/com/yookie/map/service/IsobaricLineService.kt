@@ -23,12 +23,14 @@ open class IsobaricLineService {
 
         val features = arrayListOf<Feature>()
         isobaricLineDataList.forEach { isobaricLineData ->
-            val coordinates = arrayListOf<Double>().also {
-                it.add(isobaricLineData.lon)
-                it.add(isobaricLineData.lat)
-            }
+            if (isobaricLineData.atmospheric_pressure != null) {
+                val coordinates = arrayListOf<Double>().also {
+                    it.add(isobaricLineData.lon)
+                    it.add(isobaricLineData.lat)
+                }
 
-            features.add(Feature("Feature", Property(isobaricLineData.atmospheric_pressure), Geometry("Point", coordinates)))
+                features.add(Feature("Feature", Property(isobaricLineData.atmospheric_pressure), Geometry("Point", coordinates)))
+            }
         }
 
         return IsobaricLine("FeatureCollection", features)

@@ -48,7 +48,7 @@ where release_date = ""
 data class IsobaricLineData(
         val lon: Double,
         val lat: Double,
-        val release_date: String,
+        val release_date: String?,
         val city_label: String,
-        val atmospheric_pressure: Double
+        val atmospheric_pressure: Double?
 )
