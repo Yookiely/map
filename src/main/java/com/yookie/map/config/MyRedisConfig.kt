@@ -1,18 +1,19 @@
 package com.yookie.map.config
 
 import com.yookie.map.bean.HeatMap
+import com.yookie.map.bean.IsobaricLine
 import com.yookie.map.bean.WindRose
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
+import org.springframework.data.redis.cache.RedisCacheConfiguration
+import org.springframework.data.redis.cache.RedisCacheManager
 import org.springframework.data.redis.connection.RedisConnectionFactory
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer
-import java.net.UnknownHostException
-import org.springframework.data.redis.cache.RedisCacheManager
-import org.springframework.data.redis.serializer.RedisSerializationContext
-import org.springframework.data.redis.cache.RedisCacheConfiguration
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer
+import org.springframework.data.redis.serializer.RedisSerializationContext
+import java.net.UnknownHostException
 
 
 @Configuration
@@ -56,6 +57,26 @@ open class MyRedisConfig {
                 .transactionAware()
                 .build()
     }
+
+    @Bean
+    @Throws(UnknownHostException::class)
+    open fun isobaricLineRedisTemplate(redisConnectionFactory: RedisConnectionFactory): RedisTemplate<Any, IsobaricLine> {
+        val template = RedisTemplate<Any, IsobaricLine>()
+        template.connectionFactory = redisConnectionFactory
+        template.defaultSerializer = Jackson2JsonRedisSerializer(IsobaricLine::class.java)
+        return template
+    }
+
+    @Bean
+    open fun isobaricLineRedisCacheManager(factory: RedisConnectionFactory): RedisCacheManager {
+        val config = RedisCacheConfiguration.defaultCacheConfig()
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer<IsobaricLine>(Jackson2JsonRedisSerializer(IsobaricLine::class.java))) //使用 Jackson2JsonRedisSerialize
+        return RedisCacheManager.builder(factory)
+                .cacheDefaults(config)
+                .transactionAware()
+                .build()
+    }
+
 
     @Primary
     @Bean
