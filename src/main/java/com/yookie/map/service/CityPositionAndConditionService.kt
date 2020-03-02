@@ -18,8 +18,6 @@ open class CityPositionAndConditionService {
     }
 
     open fun getCityCondition(position: String, date: String): CityCondition {
-        println(position)
-        println(date)
         val conditions = cityPositionAndConditionMapper!!.getCityCondition(position, date)
 
         return conditions.first()
