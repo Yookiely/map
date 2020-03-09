@@ -65,3 +65,9 @@ data class CityCondition(
         val visibility: Double?,
         val windDir: String?
 )
+
+@NoArg
+data class CityPositionAndCondition(
+        val position: CityPosition?,
+        val condition: CityCondition?
+)

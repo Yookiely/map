@@ -22,4 +22,5 @@ open class CityPositionAndConditionService {
 
         return conditions.first()
     }
+
 }
