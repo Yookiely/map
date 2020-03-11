@@ -4,6 +4,7 @@ import com.yookie.map.bean.CityCondition
 import com.yookie.map.bean.CityPositions
 import com.yookie.map.mapper.CityPositionAndConditionMapper
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 
 
@@ -13,6 +14,7 @@ open class CityPositionAndConditionService {
     @Autowired
     var cityPositionAndConditionMapper: CityPositionAndConditionMapper? = null
 
+    @Cacheable(cacheNames = ["position"], cacheManager = "positionsRedisCacheManager")
     open fun getAllPositions(): CityPositions {
         return CityPositions(cityPositionAndConditionMapper!!.getAllPositions())
     }

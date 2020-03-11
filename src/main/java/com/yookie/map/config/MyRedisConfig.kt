@@ -1,5 +1,6 @@
 package com.yookie.map.config
 
+import com.yookie.map.bean.CityPositions
 import com.yookie.map.bean.HeatMap
 import com.yookie.map.bean.IsobaricLine
 import com.yookie.map.bean.WindRose
@@ -71,6 +72,25 @@ open class MyRedisConfig {
     open fun isobaricLineRedisCacheManager(factory: RedisConnectionFactory): RedisCacheManager {
         val config = RedisCacheConfiguration.defaultCacheConfig()
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer<IsobaricLine>(Jackson2JsonRedisSerializer(IsobaricLine::class.java))) //使用 Jackson2JsonRedisSerialize
+        return RedisCacheManager.builder(factory)
+                .cacheDefaults(config)
+                .transactionAware()
+                .build()
+    }
+
+    @Bean
+    @Throws(UnknownHostException::class)
+    open fun positionsRedisTemplate(redisConnectionFactory: RedisConnectionFactory): RedisTemplate<Any, CityPositions> {
+        val template = RedisTemplate<Any, CityPositions>()
+        template.connectionFactory = redisConnectionFactory
+        template.defaultSerializer = Jackson2JsonRedisSerializer(CityPositions::class.java)
+        return template
+    }
+
+    @Bean
+    open fun positionsRedisCacheManager(factory: RedisConnectionFactory): RedisCacheManager {
+        val config = RedisCacheConfiguration.defaultCacheConfig()
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer<CityPositions>(Jackson2JsonRedisSerializer(CityPositions::class.java))) //使用 Jackson2JsonRedisSerialize
         return RedisCacheManager.builder(factory)
                 .cacheDefaults(config)
                 .transactionAware()
