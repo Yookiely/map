@@ -16,7 +16,7 @@ open class IsobaricLineService {
 
     open fun getIsobaricLine(date: String): IsobaricLine {
         val isobaricLineDataList = isobaricLineMapper!!.getIsobaricLineByDate(date)
-        println(isobaricLineDataList.size)
+
         val features = arrayListOf<Feature>()
         isobaricLineDataList.forEach { isobaricLineData ->
             if (isobaricLineData.atmospheric_pressure != null) {
