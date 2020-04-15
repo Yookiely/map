@@ -9,11 +9,7 @@ import org.springframework.stereotype.Component
 @Component(value = "IsobaricLineMapper")
 interface IsobaricLineMapper {
 
-    @Select("SELECT city_label, lon, lat, atmospheric_pressure, release_date\n" +
-            "FROM city_position\n" +
-            "left join city_condition\n" +
-            "on city_position.label = city_condition.city_label\n" +
-            "where release_date = #{release_date}")
+    @Select("SELECT city_label, lon, lat, atmospheric_pressure, release_date FROM city_position left join city_condition on city_position.label = city_condition.city_label where release_date = #{release_date}")
     fun getIsobaricLineByDate(release_date: String): List<IsobaricLineData>
 
 
