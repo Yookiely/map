@@ -19,9 +19,10 @@ open class IsobaricLineService {
 
         val features = arrayListOf<Feature>()
         isobaricLineDataList.forEach { isobaricLineData ->
-            if (isobaricLineData.atmospheric_pressure != null) {
+            val isChina: Boolean = isobaricLineData.lat in 10.0..60.0 && (isobaricLineData.lon + 180) in 50.0..160.0
+            if (isobaricLineData.atmospheric_pressure != null && isChina) {
                 val coordinates = arrayListOf<Double>().also {
-                    it.add(isobaricLineData.lon)
+                    it.add(isobaricLineData.lon + 180.0)
                     it.add(isobaricLineData.lat)
                 }
 
